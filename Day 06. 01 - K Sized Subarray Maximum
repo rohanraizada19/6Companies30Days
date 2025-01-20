@@ -1,0 +1,30 @@
+int findMax(vector<int> arr,int l,int r){
+    int ans = INT_MIN;
+    for(int i=l;i<=r;i++){
+        ans = max(ans,arr[i]);
+    }
+    return ans;
+}
+class Solution {
+  public:
+    vector<int> maxOfSubarrays(vector<int>& arr, int k) {
+        // code here
+        int n = arr.size();
+        vector<int> ans;
+        int l =0;
+        int r = k-1;
+        int maxElement =INT_MIN;
+        for(int i=0;i<k;i++){
+            maxElement = max(maxElement,arr[i]);
+        }
+        ans.push_back(maxElement);
+        while(r<n-1){
+            if(arr[l]==maxElement)
+                maxElement = findMax(arr,l+1,r);
+            l++;
+            r++;
+            maxElement = max(maxElement,arr[r]);
+            ans.push_back(maxElement);
+        }
+        return ans;
+    }};
