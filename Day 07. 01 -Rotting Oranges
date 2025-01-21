@@ -1,0 +1,57 @@
+class Solution {
+public:
+    int orangesRotting(vector<vector<int>>& grid)
+    {
+        int rows = grid.size();
+        int cols = grid[0].size();
+        int timestamp = 2;
+
+        while (letsRot(timestamp, grid, rows, cols))
+            timestamp++;
+        
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                if (grid[i][j] == 1)
+                    return -1;
+            }
+        }
+
+        return timestamp - 2;
+    }
+
+private:
+    bool letsRot(int timestamp, std::vector<std::vector<int>>& grid, int rows, int cols)
+    {
+        bool isDone = false;
+        int directions[4][2] = { {-1, 0}, {0, 1}, {1, 0}, {0, -1} };
+
+        for (int row = 0; row < rows; row++)
+        {
+            for (int col = 0; col < cols; col++)
+            {
+                if (grid[row][col] == timestamp)
+                {
+                    for (auto d : directions)
+                    {
+                        int nRow = row + d[0];
+                        int nCol = col + d[1];
+
+                        if (nRow >= 0 && nRow < rows &&
+                            nCol >= 0 && nCol < cols)
+                        {
+                            if (grid[nRow][nCol] == 1)
+                            {
+                                grid[nRow][nCol] = timestamp + 1;
+                                isDone = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return isDone;
+    } 
+};
