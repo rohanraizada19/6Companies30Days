@@ -1,0 +1,15 @@
+class Solution {
+public:
+    bool isValidSerialization(string preorder) {
+        int balance = 1;
+        stringstream ss(preorder);
+        string node;
+
+        while (getline(ss, node, ',')) {
+            if (balance <= 0) return false;
+            if (node == "#") --balance;
+            else ++balance;
+        }
+        return balance == 0;
+    }
+};
