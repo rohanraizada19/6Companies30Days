@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int maximumProduct(vector<int>& nums, int k) 
+    {
+        priority_queue<int,vector<int>,greater<int>>pq;
+        for(auto val:nums) pq.push(val);
+
+        long long mod = 1e9+7, ans = 1, val;
+        while(k--)
+        {
+            val = pq.top(); pq.pop();
+            pq.push(val+1);
+        }
+
+        while(!pq.empty())
+        {
+            ans = (ans * pq.top()) % mod;
+            pq.pop();
+        }
+        return ans;
+    }
+};
